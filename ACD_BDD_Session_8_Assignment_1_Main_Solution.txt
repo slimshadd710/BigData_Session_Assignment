@@ -1,0 +1,26 @@
+ACD_BDD_Session_8_Assignment_1_Main_Solution
+
+
+
+
+Input :
+
+Hello I am Good 
+
+lines = LOAD '/pig_Demo/File.txt' AS (line:chararray);
+words = FOREACH lines GENERATE FLATTEN(TOKENIZE(line)) as word;
+grouped = GROUP words BY word;
+wordcount = FOREACH grouped GENERATE group, COUNT(words);
+DUMP wordcount;
+
+
+Output :
+ne.util.MapRedUtil - Total input paths to process : 1
+(I,1)
+(am,1)
+(Good,1)
+(Hello,1)
+(,0)
+grunt>
+
+
