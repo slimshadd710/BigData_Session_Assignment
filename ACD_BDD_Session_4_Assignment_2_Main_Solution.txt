@@ -1,0 +1,20 @@
+ACD_BDD_Session_4_Assignment_2_Main
+
+1) c
+2) b
+3) d
+4) d
+5) 
+6) c 
+7) c
+How Hadoop determined the distance between two nodes?
+Hadoop admin write a script called Topology script to determine the rack location of nodes. It is trigger to know the distance of the nodes to replicate the data. Configure this script in core-site.xml
+<property>
+<name>topology.script.file.name</name>
+<value>core/rack-awareness.sh</value>
+</property>
+in the rack-awareness.sh you should write script where the nodes located.
+
+8) c
+9) a
+10) e 
