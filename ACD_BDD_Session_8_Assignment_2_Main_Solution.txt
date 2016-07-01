@@ -1,0 +1,161 @@
+ACD_BDD_Session_8_Assignment_2_Main_Solution
+
+1) Concat :
+ A = LOAD 'data' as (f1:chararray, f2:chararray, f3:chararray);
+
+DUMP A;
+(apache,open,source)
+(hadoop,map,reduce)
+(pig,pig,latin)
+
+X = FOREACH A GENERATE CONCAT(f2,f3);
+
+DUMP X;
+(opensource)
+(mapreduce)
+(piglatin)
+
+2) Tokenize :
+
+A  = LOAD 'data' AS (f1:chararray);
+
+DUMP A;
+(Here is the first string.)
+(Here is the second string.)
+(Here is the third string.)
+
+X = FOREACH A GENERATE TOKENIZE(f1);
+
+DUMP X;
+({(Here),(is),(the),(first),(string.)})
+({(Here),(is),(the),(second),(string.)})
+({(Here),(is),(the),(third),(string.)})
+
+3) SUM 
+
+A = LOAD 'data' AS (owner:chararray, pet_type:chararray, pet_num:int);
+
+DUMP A;
+(Alice,turtle,1)
+(Alice,goldfish,5)
+(Alice,cat,2)
+(Bob,dog,2)
+(Bob,cat,2) 
+
+B = GROUP A BY owner;
+
+DUMP B;
+(Alice,{(Alice,turtle,1),(Alice,goldfish,5),(Alice,cat,2)})
+(Bob,{(Bob,dog,2),(Bob,cat,2)})
+
+X = FOREACH B GENERATE group, SUM(A.pet_num);
+DUMP X;
+(Alice,8L)
+(Bob,4L)
+
+4) MIN 
+
+A = LOAD 'student' AS (name:chararray, session:chararray, gpa:float);
+
+DUMP A;
+(John,fl,3.9F)
+(John,wt,3.7F)
+(John,sp,4.0F)
+(John,sm,3.8F)
+(Mary,fl,3.8F)
+(Mary,wt,3.9F)
+(Mary,sp,4.0F)
+(Mary,sm,4.0F)
+
+B = GROUP A BY name;
+
+DUMP B;
+(John,{(John,fl,3.9F),(John,wt,3.7F),(John,sp,4.0F),(John,sm,3.8F)})
+(Mary,{(Mary,fl,3.8F),(Mary,wt,3.9F),(Mary,sp,4.0F),(Mary,sm,4.0F)})
+
+X = FOREACH B GENERATE group, MIN(A.gpa);
+
+DUMP X;
+(John,3.7F)
+(Mary,3.8F)
+
+5) MAX
+
+A = LOAD 'student' AS (name:chararray, session:chararray, gpa:float);
+
+DUMP A;
+(John,fl,3.9F)
+(John,wt,3.7F)
+(John,sp,4.0F)
+(John,sm,3.8F)
+(Mary,fl,3.8F)
+(Mary,wt,3.9F)
+(Mary,sp,4.0F)
+(Mary,sm,4.0F)
+
+B = GROUP A BY name;
+
+DUMP B;
+(John,{(John,fl,3.9F),(John,wt,3.7F),(John,sp,4.0F),(John,sm,3.8F)})
+(Mary,{(Mary,fl,3.8F),(Mary,wt,3.9F),(Mary,sp,4.0F),(Mary,sm,4.0F)})
+
+X = FOREACH B GENERATE group, MAX(A.gpa);
+
+DUMP X;
+(John,4.0F)
+(Mary,4.0F)
+
+6) Limit
+
+7) STORE 
+
+A = LOAD 'data' AS (a1:int,a2:int,a3:int);
+
+DUMP A;
+(1,2,3)
+(4,2,1)
+(8,3,4)
+(4,3,3)
+(7,2,5)
+(8,4,3)
+
+B = FOREACH A GENERATE CONCAT('a:',(chararray)f1), CONCAT('b:',(chararray)f2), CONCAT('c:',(chararray)f3);
+
+DUMP B;
+(a:1,b:2,c:3)
+(a:4,b:2,c:1)
+(a:8,b:3,c:4)
+(a:4,b:3,c:3)
+(a:7,b:2,c:5)
+(a:8,b:4,c:3)
+
+STORE B INTO 'myoutput' using PigStorage(',');
+
+CAT myoutput;
+a:1,b:2,c:3
+a:4,b:2,c:1
+a:8,b:3,c:4
+a:4,b:3,c:3
+a:7,b:2,c:5
+a:8,b:4,c:3
+
+8) Distinct 
+
+A = LOAD 'data' AS (a1:int,a2:int,a3:int);
+
+DUMP A;
+(8,3,4)
+(1,2,3)        
+(4,3,3)        
+(4,3,3)        
+(1,2,3) 
+In this example all duplicate tuples are removed.
+
+X = DISTINCT A;
+
+DUMP X;
+(1,2,3)
+(4,3,3)
+(8,3,4)
+
+9)Flatten 
